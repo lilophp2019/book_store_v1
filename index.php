@@ -1,4 +1,4 @@
-<?php include 'functions.php'?>
+<?php include "functions.php";?>
 
 <!DOCTYPE html>
 
@@ -25,7 +25,21 @@
                         <fieldset>
                             
                             <!-- Form Name -->
-                            <legend>BOOK_STORE</legend>
+                            <legend style="margin-top:2em;">BOOK_STORE</legend>
+                       
+
+                            <!-- Button For Search -->
+                            <form class="form-horizontal" action="busca.php" method="post" name="Search" enctype="multipart/form-data">
+                    
+                                <div>
+
+                                    <input type="button" value="Search" class="Redirect" id="btnSearch" 
+                                        onClick="document.location.href='../import_csv/busca.php'" />
+
+                                </div>
+
+                            </form>
+
 
                             <!-- File Button -->
                             <div class="form-group">
@@ -34,6 +48,7 @@
                                     <input type="file" name="file" id="file" class="input-large">
                                 </div>
                             </div>
+
 
                             <!-- Button -->
                             <div class="form-group">
@@ -49,15 +64,17 @@
 
                 </div>
 
+                <!-- Results -->
                 <?php
                     
-                    get_all_records( OpenCon() );
+                    get_all_records( $conn );
 
                 ?>
               
             </div>
 
         </div>
+
 
         <div>
 

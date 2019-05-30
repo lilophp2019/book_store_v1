@@ -41,6 +41,7 @@
             }
         
             fclose($file); 
+            CloseCon($conn);
 
         }
 
@@ -126,56 +127,33 @@
             echo "you have no records";
         }
 
+        return $total_geral;
+
     }
 
     if(isset($_POST["Export"]))
     {
-         
+
         header('Content-type: text/plain');
-        header('Content-Disposition: attachment; filename=agostassi.txt');  
-        $output = fopen("php://output", "w");  
+        header('Content-Disposition: attachment; filename=agostassi.txt');
+         
+        $output = fopen("php://output", "w") or die ("Can´t open this file");  
+        
         fputcsv( $output, array('ID', 'ISBN', 'TITLE', 'TYPE', 'PRICE', 'AUTHORS') ); echo "\r\n"; 
         $query = "SELECT * from bookstore_v1.tb_livro ORDER BY pk_livro ASC";  
         $result = mysqli_query($conn, $query);  
-        
 
         while($row = mysqli_fetch_assoc($result))  
         {  
            
             fputcsv($output, $row ); 
-            
             echo "\r\n";
 
         }  
-                     
+
         fclose($output);  
+        CloseCon($conn);
 
     }  
 
-
-
-/*
-
-    if(isset($_POST["Export"]))
-    {
-         
-        header('Content-Type: text/csv; charset=utf-8');  
-        header('Content-Disposition: attachment; filename=data.txt');  
-        $output = fopen("php://output", "w");  
-        fputcsv($output, array('ID', 'ISBN', 'TITLE', 'TYPE', 'PRICE', 'AUTHORS'));  
-        $query = "SELECT * from bookstore_v1.tb_livro ORDER BY pk_livro ASC";  
-        $result = mysqli_query($conn, $query);  
-        
-        while($row = mysqli_fetch_assoc($result))  
-        {  
-            fputcsv($output, $row); 
-        }  
-
-        fclose($output);  
-
-    }  
-
-*/
-
-    
 ?>
